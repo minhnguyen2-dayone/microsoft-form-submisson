@@ -2318,6 +2318,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@microsoft/microsoft-graph-client@npm:^3.0.7":
+  version: 3.0.7
+  resolution: "@microsoft/microsoft-graph-client@npm:3.0.7"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    tslib: ^2.2.0
+  peerDependenciesMeta:
+    "@azure/identity":
+      optional: true
+    "@azure/msal-browser":
+      optional: true
+    buffer:
+      optional: true
+    stream-browserify:
+      optional: true
+  checksum: 3daee3fc4faa56e22cc0c0a9bcd3887ff0cbd53ec09c792438f0f40b8cafb8654e5d8dcc24d0fd60fda9348ca185fa6c8b50762b72f5c9212e54003d32626ece
+  languageName: node
+  linkType: hard
+
+"@microsoft/microsoft-graph-types@npm:^2.40.0":
+  version: 2.40.0
+  resolution: "@microsoft/microsoft-graph-types@npm:2.40.0"
+  checksum: 3892e910baf4fcf2d1bcee4c71683e3707818be6ff1b4b9dbc29b9e2eab942ea0b171b3023d4620213f10d93d03611e6615706a3d1af4ca44028491a0544ccaf
+  languageName: node
+  linkType: hard
+
 "@mui/core-downloads-tracker@npm:^7.2.0":
   version: 7.2.0
   resolution: "@mui/core-downloads-tracker@npm:7.2.0"
@@ -9400,6 +9426,8 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.14.0
     "@emotion/styled": ^11.14.1
+    "@microsoft/microsoft-graph-client": ^3.0.7
+    "@microsoft/microsoft-graph-types": ^2.40.0
     "@mui/icons-material": ^7.2.0
     "@mui/material": ^7.2.0
     "@tanstack/react-query": ^5.83.0
@@ -13201,7 +13229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.3":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.3, tslib@npm:^2.2.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: e4aba30e632b8c8902b47587fd13345e2827fa639e7c3121074d5ee0880723282411a8838f830b55100cbe4517672f84a2472667d355b81e8af165a55dc6203a

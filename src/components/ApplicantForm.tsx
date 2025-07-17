@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+
+const siteId =
+  "dayoneteams.sharepoint.com,60092906-2596-4a87-b51b-e84a76a902f9,c779e6a7-ed47-4c05-a5e6-73b49f52b4b3";
+const listId = "8ef11bc7-0af4-4a9f-b8e1-ab0cb6e427e9";
 
 const positionOptions = [
   { value: "", label: "—" },
@@ -39,6 +44,35 @@ export const ApplicantForm: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.setFieldValue("resume", e.currentTarget.files?.[0] || null);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Gọi backend để lấy access token
+        // const tokenRes = await axios.get("/api/token");
+        // const accessToken = tokenRes.data.access_token;
+
+        const accessToken =
+          "eyJ0eXAiOiJKV1QiLCJub25jZSI6Im80cU9FeE0zNXZBZ3dUSHZvX09kVXFuajlZSWV6Y3NiVHNhbXdES0dFajgiLCJhbGciOiJSUzI1NiIsIng1dCI6Il9qTndqZVNudlRUSzhYRWRyNVFVUGtCUkxMbyIsImtpZCI6Il9qTndqZVNudlRUSzhYRWRyNVFVUGtCUkxMbyJ9.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wM2M2MzhjZC0yZjI0LTRlMTctODBjMy1jNTY0ZGEyY2U1NzEvIiwiaWF0IjoxNzUyNzQyMDY5LCJuYmYiOjE3NTI3NDIwNjksImV4cCI6MTc1Mjc0NTk2OSwiYWlvIjoiazJSZ1lOai9QTkgrZ2JHVTZZeEhYOFdQZk4zWkN3QT0iLCJhcHBfZGlzcGxheW5hbWUiOiJUZXN0IFJlc3QiLCJhcHBpZCI6IjQwZmI1ODc5LThiYWUtNDJmNi1hM2Q2LWRmZTQyNDI5Yjc2ZCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzAzYzYzOGNkLTJmMjQtNGUxNy04MGMzLWM1NjRkYTJjZTU3MS8iLCJpZHR5cCI6ImFwcCIsIm9pZCI6IjRlNWQ2YWI2LWYzZWYtNDgyNi1iOTJlLWU2ZTUxZGIyN2RmNyIsInJoIjoiMS5BYjRBelRqR0F5UXZGMDZBdzhWazJpemxjUU1BQUFBQUFBQUF3QUFBQUFBQUFBQjdBUUMtQUEuIiwicm9sZXMiOlsiRmlsZXMuUmVhZFdyaXRlLkFwcEZvbGRlciIsIlNpdGVzLlNlbGVjdGVkIiwiRmlsZXMuU2VsZWN0ZWRPcGVyYXRpb25zLlNlbGVjdGVkIiwiTGlzdEl0ZW1zLlNlbGVjdGVkT3BlcmF0aW9ucy5TZWxlY3RlZCIsIlNpdGVzLlJlYWQuQWxsIiwiU2l0ZXMuUmVhZFdyaXRlLkFsbCIsIlNpdGVzLk1hbmFnZS5BbGwiLCJGaWxlcy5SZWFkV3JpdGUuQWxsIiwiU2l0ZXMuQXJjaGl2ZS5BbGwiLCJGaWxlcy5SZWFkLkFsbCIsIkxpc3RzLlNlbGVjdGVkT3BlcmF0aW9ucy5TZWxlY3RlZCIsIlNpdGVzLkZ1bGxDb250cm9sLkFsbCJdLCJzdWIiOiI0ZTVkNmFiNi1mM2VmLTQ4MjYtYjkyZS1lNmU1MWRiMjdkZjciLCJ0ZW5hbnRfcmVnaW9uX3Njb3BlIjoiQVMiLCJ0aWQiOiIwM2M2MzhjZC0yZjI0LTRlMTctODBjMy1jNTY0ZGEyY2U1NzEiLCJ1dGkiOiJSY0p5dFo1NFFrdVBDRzl6c1R3eUFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyIwOTk3YTFkMC0wZDFkLTRhY2ItYjQwOC1kNWNhNzMxMjFlOTAiXSwieG1zX2Z0ZCI6IldtMkFqMG5pazREaFZpQ2N0eFRYdFdqQlhTY3pCX2tLYldFTlI3VzllU2NCYTI5eVpXRmpaVzUwY21Gc0xXUnpiWE0iLCJ4bXNfaWRyZWwiOiI3IDYiLCJ4bXNfcmQiOiIwLjQyTGpZQkppMnNjb0pNTEJMaVN3OGYwMlJldlhxVzV6RDFoT1pDaWNmZ29veWlra1lNZWVHWlU1TjlTdGFmSnFBY1pmUjc0QVJUbUVCSmdaSU9BQWxBWUEiLCJ4bXNfdGNkdCI6MTc0OTIwMjc3Mn0.UkLo11DQ9Io_lSFFcXFRXu00Bnh94ZQ4DIZ4pR0NceSw5x52_6NgsIvDDh1bJJ8WYCc_n0eIEM1mZ01fY9PRYuCQKFOz99ImGsy007WSC5LAgvbYwVCU0PHT12Pufgq3VWmFX7DEyEJkz6D6mxuD3yFxCk-ESZxBqLnw6H_1rvx4XeLbtKzOjUZWu0RE-8DyEDqjf6Eh57CDL176ZZoFqVHZzyoMFyAXwyJQxDHZeRpaXvgamkBDAjZlmL4iTvAR_S401J8W3IC49dt2944vj6jM19h26iV2FiATLEhGnOokG7p7TAN5zxj63eGABsbJQDssXWgjVT14HCigotkQlQ";
+
+        // Gọi Microsoft Graph API
+        const graphRes = await axios.get(
+          `https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items?expand=fields`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        console.log("Graph data:", graphRes.data);
+      } catch (err) {
+        console.error("Error:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div
